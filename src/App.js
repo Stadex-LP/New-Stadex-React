@@ -3,7 +3,7 @@ import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import './App.css';
 import DashboardLayout from './layouts/dashboard';
 import Manifestations from './views/manifestations';
-import Transports from './views/materiels';
+import Transports from './views/transports';
 import Equipements from './views/equipements';
 import Organisateurs from './views/organisateurs';
 import Materiels from './views/materiels';

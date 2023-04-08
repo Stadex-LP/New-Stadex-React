@@ -1,5 +1,6 @@
 import DashboardLayout from "../../layouts/dashboard"
 import ManifTable from "./components/manifstable"
+import { Link } from 'react-router-dom'
 
 function Manifestations() {
   
@@ -19,9 +20,12 @@ function Manifestations() {
                     </h2>
                 </div>
 
-                <button className="linear rounded-[20px] bg-lightPrimary px-4 py-2 text-base font-medium text-brand-500 transition duration-200 hover:bg-gray-100 active:bg-gray-200 ">
-                    Ajouter une nouvelle
-                </button>
+                <Link to="/manifestations/add">
+                    <button className="linear rounded-[20px] bg-lightPrimary px-4 py-2 text-base font-medium text-brand-500 transition duration-200 hover:bg-gray-100 active:bg-gray-200 ">
+                        Ajouter + 
+                    </button>
+                </Link>
+                
             </div>
             <br/>
             <ManifTable/>
