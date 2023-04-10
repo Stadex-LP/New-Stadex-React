@@ -6,7 +6,7 @@ function Organisateurs() {
   return (
     <DashboardLayout>
       <div class="h-screen px-4 pb-24 overflow-auto md:px-6">
-        <div className="flex h-fit w-full items-center justify-between pt-4 pb-[20px] shadow-2xl shadow-gray-100 dark:!bg-navy-700 dark:shadow-none">
+        <div className="flex h-fit w-full items-center justify-between pt-4 pb-[20px]">
           <div>
             <h1 class="text-4xl font-semibold text-gray-800 dark:text-white">
               Les Organisateurs

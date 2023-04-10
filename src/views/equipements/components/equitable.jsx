@@ -21,7 +21,7 @@ function EquiTable() {
     getPost();
   }, []);
 
-  if (!post) return "Aucun Transports";
+  if (!post) return "Aucun Equipements";
 
   return (
     <div class="overflow-x-auto">

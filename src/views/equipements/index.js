@@ -6,13 +6,11 @@ function Equipements() {
   return (
     <DashboardLayout>
       <div class="h-screen px-4 pb-24 overflow-auto md:px-6">
-        <div className="flex h-fit w-full items-center justify-between pt-4 pb-[20px] shadow-2xl shadow-gray-100 dark:!bg-navy-700 dark:shadow-none">
+        <div className="flex h-fit w-full items-center justify-between pt-4 pb-[20px]">
           <div>
-            <h1 class="text-4xl font-semibold text-gray-800 dark:text-white">
-              Les Equipements
-            </h1>
+            <h1 class="text-4xl font-semibold">Les Equipements</h1>
             <h2 class="text-gray-400 text-md">
-              Ici retrouvrez la liste de tous les equipements.
+              Ici retrouvrez la liste de tous les équipements.
             </h2>
           </div>
           <Link to="/equipements/add">

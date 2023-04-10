@@ -1,19 +1,16 @@
 import axios from "axios";
 import React from "react";
-import "./index.css";
 
-export default class EquiForm extends React.Component {
+export default class OrgaForm extends React.Component {
   state = {
-    Libelle: "",
-    PrixHorraire: "",
-    CodePlanetic: "",
+    NomOrga: "",
+    ServiceDemandeur: "",
   };
 
   handleChange = (event) => {
     this.setState({
-      Libelle: event.target.value,
-      PrixHorraire: event.target.value,
-      CodePlanetic: event.target.value,
+      NomOrga: event.target.value,
+      ServiceDemandeur: event.target.value,
     });
   };
 
@@ -21,12 +18,11 @@ export default class EquiForm extends React.Component {
     event.preventDefault();
 
     const user = {
-      Libelle: this.state.Libelle,
-      PrixHorraire: this.state.PrixHorraire,
-      CodePlanetic: this.state.CodePlanetic,
+      NomOrga: this.state.NomOrga,
+      ServiceDemandeur: this.state.ServiceDemandeur,
     };
 
-    axios.post(`http://localhost/api/equipements`, { user }).then((res) => {
+    axios.post(`http://localhost/api/organisateurs`, { user }).then((res) => {
       console.log(res);
       console.log(res.data);
     });
@@ -39,47 +35,32 @@ export default class EquiForm extends React.Component {
           <div className="border-b border-gray-900/10 pb-12">
             <div className="col-span-full">
               <label
-                htmlFor="Libelle"
+                htmlFor="NomOrga"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Le nom de l'équipement
+                Nom Organisateurs
               </label>
               <div className="mt-2">
                 <input
                   type="text"
-                  name="Libelle"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  onChange={this.handleChange}
-                />
-              </div>
-            </div>{" "}
-            <div className="mt-5 col-span-full">
-              <label
-                htmlFor="PrixHorraire"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Le PrixHorraire équipements
-              </label>
-              <div className="mt-2">
-                <input
-                  type="num"
-                  name="PrixHorraire"
+                  name="NomOrga"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   onChange={this.handleChange}
                 />
               </div>
             </div>
+
             <div className="mt-5 col-span-full">
               <label
-                htmlFor="CodePlanetic"
+                htmlFor="ServiceDemandeur"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Le CodePlanetic de l'équipement
+                Service Demandeur
               </label>
               <div className="mt-2">
                 <input
                   type="text"
-                  name="CodePlanetic"
+                  name="ServiceDemandeur"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   onChange={this.handleChange}
                 />

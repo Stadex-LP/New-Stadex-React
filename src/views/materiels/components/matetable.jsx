@@ -14,14 +14,14 @@ function MateTable() {
 
   React.useEffect(() => {
     async function getPost() {
-      const response = await client.get("/1");
+      const response = await client.get("/2");
       console.log();
       setPost(response.data);
     }
     getPost();
   }, []);
 
-  if (!post) return "Aucun Transports";
+  if (!post) return "Aucun Materiels";
 
   return (
     <div class="overflow-x-auto">
@@ -33,7 +33,7 @@ function MateTable() {
                 <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                   <th class="py-3 px-6 text-left">Id</th>
                   <th class="py-3 px-6 text-left">Libelle</th>
-                  <th class="py-3 px-6 text-left">Prix/Horaire</th>
+                  <th class="py-3 px-6 text-left">Prix Unitaire</th>
                   <th class="py-3 px-6 text-left">Actions</th>
                 </tr>
               </thead>
@@ -49,10 +49,8 @@ function MateTable() {
                     </div>
                   </td>
 
-                  <td className="px-6 py-4 whitespace-nowrap text-left">
-                    <div className="text-sm text-gray-500">
-                      {post.prixHoraire}
-                    </div>
+                  <td className="px-6 py-4 whitespace-nowrap text-left text-sm text-gray-500">
+                    {post.prixHoraire}
                   </td>
 
                   <td class="py-3 px-6">

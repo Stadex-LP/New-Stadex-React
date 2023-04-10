@@ -14,14 +14,14 @@ function OrgaTable() {
 
   React.useEffect(() => {
     async function getPost() {
-      const response = await client.get("/1");
+      const response = await client.get("3");
       console.log();
       setPost(response.data);
     }
     getPost();
   }, []);
 
-  if (!post) return "Aucun Transports";
+  if (!post) return "Aucun Organisateurs";
 
   return (
     <div class="overflow-x-auto">
