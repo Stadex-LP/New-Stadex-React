@@ -2,6 +2,7 @@ import logo from "./logo.svg";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import DashboardLayout from "./layouts/dashboard";
+import Home from "./views/home";
 import Manifestations from "./views/manifestations";
 import Transports from "./views/transports";
 import Equipements from "./views/equipements";
@@ -18,6 +19,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<DashboardLayout />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/manifestations" element={<Manifestations />} />
         <Route path="/transports" element={<Transports />} />
         <Route path="/equipements" element={<Equipements />} />
