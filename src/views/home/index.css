@@ -8,7 +8,7 @@ body {
     height: 100%;
   }
   
-  div.titre {
+div.titre {
     text-align: center;
     display: block;
     height: 180px; /* Définissez la hauteur de votre div ici */
