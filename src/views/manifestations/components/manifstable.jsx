@@ -1,5 +1,6 @@
 import axios from "axios";
 import React from "react";
+<<<<<<< HEAD
 import Modal from "../../../components/modal";
 
 const client = axios.create({
@@ -19,8 +20,33 @@ function ManifTable() {
       const response = await client.get("/manifestations/1");
       console.log();
       setPost(response.data);
+=======
+import client from "../../../api";
+import Modal from "../../../components/modal";
+
+
+const fetchData = async () => {
+  const response = await client.get('/manifestations');
+  const data = response.data;
+  return data;
+}
+
+
+function ManifTable() {
+
+  const [showModal, setShowModal] = React.useState(false);
+  const [post, setPost] = React.useState([]);
+
+  React.useEffect(() => {
+
+    const getData = async () => {
+      const response = await fetchData();
+      setPost(response);
+>>>>>>> work/darius
     }
-    getPost();
+
+    getData();
+
   }, []);
 
   if (!post) return "Aucune manifestations";
@@ -44,31 +70,54 @@ function ManifTable() {
                   </tr>
                 </thead>
                 <tbody class="text-gray-600 text-sm font-light">
+<<<<<<< HEAD
                   <tr key={post.id}>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm text-gray-900">{post.id}</div>
+=======
+                  {post.map(item => (
+                    <tr key={item.id}>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm text-gray-900">{item.id}</div>
+>>>>>>> work/darius
                     </td>
 
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm font-medium text-gray-900">
+<<<<<<< HEAD
                         {post.denomination}
+=======
+                        {item.denomination}
+>>>>>>> work/darius
                       </div>
                     </td>
 
                     <td className="px-6 py-4 whitespace-nowrap text-left">
                       <div className="text-sm text-gray-500">
+<<<<<<< HEAD
                         {post.dateDebut}
+=======
+                        {item.dateDebut}
+>>>>>>> work/darius
                       </div>
                     </td>
 
                     <td className="px-6 py-4 whitespace-nowrap text-left">
                       <div className="text-sm text-gray-500">
+<<<<<<< HEAD
                         {post.dateFin}
+=======
+                        {item.dateFin}
+>>>>>>> work/darius
                       </div>
                     </td>
 
                     <td className="px-6 py-4 whitespace-nowrap text-left text-sm text-gray-500">
+<<<<<<< HEAD
                       {post.lieu}
+=======
+                      {item.lieu}
+>>>>>>> work/darius
                     </td>
 
                     <td class="py-4 px-6 whitespace-nowrap text-left">
@@ -117,6 +166,11 @@ function ManifTable() {
                       </div>
                     </td>
                   </tr>
+<<<<<<< HEAD
+=======
+                  ))}
+                  
+>>>>>>> work/darius
                 </tbody>
               </table>
             </div>

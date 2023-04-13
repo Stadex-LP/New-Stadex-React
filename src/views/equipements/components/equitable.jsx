@@ -1,6 +1,8 @@
 import axios from "axios";
 import React from "react";
+import client from "../../../api";
 
+<<<<<<< HEAD
 const client = axios.create({
   baseURL: "http://localhost/api/equipement_sportifs",
   headers: {
@@ -11,14 +13,27 @@ const client = axios.create({
 
 function EquiTable() {
   const [post, setPost] = React.useState(null);
+=======
+
+const fetchData = async () => {
+  const response = await client.get('/equipement_sportifs');
+  const data = response.data;
+  return data;
+}
+
+function EquiTable() {
+  const [post, setPost] = React.useState([]);
+>>>>>>> work/darius
 
   React.useEffect(() => {
-    async function getPost() {
-      const response = await client.get("/1");
-      console.log();
-      setPost(response.data);
+    
+    const getData = async () => {
+      const response = await fetchData();
+      setPost(response);
     }
-    getPost();
+
+    getData();
+    
   }, []);
 
   if (!post) return "Aucun Equipements";
@@ -34,10 +49,15 @@ function EquiTable() {
                   <th class="py-3 px-6 text-left">Id</th>
                   <th class="py-3 px-6 text-left">Libelle</th>
                   <th class="py-3 px-6 text-left">Prix/Horaire</th>
+<<<<<<< HEAD
+=======
+                  <th class="py-3 px-6 text-left">Code</th>
+>>>>>>> work/darius
                   <th class="py-3 px-6 text-left">Actions</th>
                 </tr>
               </thead>
               <tbody class="text-gray-600 text-sm font-light">
+<<<<<<< HEAD
                 <tr key={post.id}>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm text-gray-900">{post.id}</div>
@@ -77,6 +97,53 @@ function EquiTable() {
                         </svg>
                       </div>
 
+=======
+
+                {post.map(item=> (
+                  <tr key={item.id}>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900">{item.id}</div>
+                  </td>
+
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm font-medium text-gray-900">
+                      {item.libelle}
+                    </div>
+                  </td>
+
+                  <td className="px-6 py-4 whitespace-nowrap text-left text-sm text-gray-500">
+                    {item.prixHoraire}
+                  </td>
+
+                  <td className="px-6 py-4 whitespace-nowrap text-left text-sm text-gray-500">
+                    {item.codePlanitec}
+                  </td>
+
+                  <td class="py-4 px-6 whitespace-nowrap text-left">
+                    <div class="flex item-center justify-center">
+                      <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                          />
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                          />
+                        </svg>
+                      </div>
+
+>>>>>>> work/darius
                       <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -95,6 +162,11 @@ function EquiTable() {
                     </div>
                   </td>
                 </tr>
+<<<<<<< HEAD
+=======
+                ))}
+                
+>>>>>>> work/darius
               </tbody>
             </table>
           </div>
