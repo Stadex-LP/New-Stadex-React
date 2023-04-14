@@ -1,13 +1,15 @@
 import axios from "axios";
 import React, { useState } from "react";
-import client from "../../../api";
+import client from "../../../api"; //connexion avec axios que l'on a nomée client
 
 const postData = async (data) => {
-    const response = await client.post('/manifestations', data);
-    return response.data;
-}
+  // envoyer les données vers le lien localhost/api/mani
+  const response = await client.post("/manifestations", data);
+  return response.data;
+};
 
 function ManiForm() {
+  // variable pré-défini
   const [denomination, setdenomination] = useState("");
   const [datefin, setdatefin] = useState("");
   const [datedebut, setdatedebut] = useState("");
@@ -15,21 +17,19 @@ function ManiForm() {
   const [organisateur, setorganisateur] = useState("");
 
   const handleSubmit = async (event) => {
+    //soumettre le formulaire, il prend en option la fonction d'envoie
     event.preventDefault();
 
     const data = { denomination, datedebut, datefin, lieu, organisateur };
 
     const response = await postData(data);
     console.log(response);
-
   };
-
 
   return (
     <form onSubmit={handleSubmit}>
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
-
           <div className="col-span-full">
             <label
               htmlFor="denomination"
@@ -104,7 +104,6 @@ function ManiForm() {
             </div>
           </div>
 
-              
           <div className="col-span-full">
             <label
               htmlFor="organisateur"
@@ -122,7 +121,6 @@ function ManiForm() {
               />
             </div>
           </div>
-
         </div>
       </div>
 

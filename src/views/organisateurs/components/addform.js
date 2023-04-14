@@ -1,14 +1,13 @@
 import axios from "axios";
-import React, {useState} from "react";
+import React, { useState } from "react";
 import client from "../../../api";
 
 const postData = async (data) => {
-  const response = await client.post('/organisateurs', data);
+  const response = await client.post("/organisateurs", data);
   return response.data;
-}
+};
 
 function OrgaForm() {
-
   const [NomOrga, setnom] = useState("");
   const [ServiceDemandeur, setdemandeur] = useState("");
 
@@ -19,11 +18,10 @@ function OrgaForm() {
 
     const response = await postData(data);
     console.log(response);
-
   };
 
   return (
-    <form onSubmit={this.handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
           <div className="col-span-full">
@@ -80,7 +78,6 @@ function OrgaForm() {
       </div>
     </form>
   );
-
 }
 
 export default OrgaForm;
