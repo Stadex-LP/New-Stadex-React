@@ -1,24 +1,26 @@
 import axios from "axios";
 import React from "react";
+import client from "../../../api";
 
-const client = axios.create({
-  baseURL: "http://localhost/api/equipement_sportifs",
-  headers: {
-    "Content-Type": "application/json",
-    accept: "application/json",
-  },
-});
+
+const fetchData = async () => {
+  const response = await client.get('/equipement_sportifs');
+  const data = response.data;
+  return data;
+}
 
 function EquiTable() {
-  const [post, setPost] = React.useState(null);
+  const [post, setPost] = React.useState([]);
 
   React.useEffect(() => {
-    async function getPost() {
-      const response = await client.get("/1");
-      console.log();
-      setPost(response.data);
+    
+    const getData = async () => {
+      const response = await fetchData();
+      setPost(response);
     }
-    getPost();
+
+    getData();
+    
   }, []);
 
   if (!post) return "Aucun Equipements";
@@ -34,23 +36,30 @@ function EquiTable() {
                   <th class="py-3 px-6 text-left">Id</th>
                   <th class="py-3 px-6 text-left">Libelle</th>
                   <th class="py-3 px-6 text-left">Prix/Horaire</th>
+                  <th class="py-3 px-6 text-left">Code</th>
                   <th class="py-3 px-6 text-left">Actions</th>
                 </tr>
               </thead>
               <tbody class="text-gray-600 text-sm font-light">
-                <tr key={post.id}>
+
+                {post.map(item=> (
+                  <tr key={item.id}>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{post.id}</div>
+                    <div className="text-sm text-gray-900">{item.id}</div>
                   </td>
 
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-medium text-gray-900">
-                      {post.libelle}
+                      {item.libelle}
                     </div>
                   </td>
 
                   <td className="px-6 py-4 whitespace-nowrap text-left text-sm text-gray-500">
-                    {post.prixHoraire}
+                    {item.prixHoraire}
+                  </td>
+
+                  <td className="px-6 py-4 whitespace-nowrap text-left text-sm text-gray-500">
+                    {item.codePlanitec}
                   </td>
 
                   <td class="py-4 px-6 whitespace-nowrap text-left">
@@ -95,6 +104,8 @@ function EquiTable() {
                     </div>
                   </td>
                 </tr>
+                ))}
+                
               </tbody>
             </table>
           </div>
