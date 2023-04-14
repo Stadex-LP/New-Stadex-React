@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import client from "../../../api"; //connexion avec axios que l'on a nomée client
+import { Link } from "react-router-dom";
 
 const postData = async (data) => {
   // envoyer les données vers le lien localhost/api/mani
@@ -130,12 +131,14 @@ function ManiForm() {
             Annuler
             </button>
             </Link> */}
-        <button
-          type="submit"
-          className="rounded-md bg-green-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-        >
-          Save
-        </button>
+        <Link to="/manifestations/">
+          <button
+            type="submit"
+            className="rounded-md bg-green-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            Save
+          </button>
+        </Link>
       </div>
     </form>
   );
