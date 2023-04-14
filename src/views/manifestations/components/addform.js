@@ -11,8 +11,8 @@ const postData = async (data) => {
 function ManiForm() {
   // variable pré-défini
   const [denomination, setdenomination] = useState("");
-  const [datefin, setdatefin] = useState("");
-  const [datedebut, setdatedebut] = useState("");
+  const [dateFin, setdateFin] = useState("");
+  const [dateDebut, setdateDebut] = useState("");
   const [lieu, setlieu] = useState("");
   const [organisateur, setorganisateur] = useState("");
 
@@ -20,7 +20,7 @@ function ManiForm() {
     //soumettre le formulaire, il prend en option la fonction d'envoie
     event.preventDefault();
 
-    const data = { denomination, datedebut, datefin, lieu, organisateur };
+    const data = { denomination, dateDebut, dateFin, lieu, organisateur };
 
     const response = await postData(data);
     console.log(response);
@@ -61,8 +61,8 @@ function ManiForm() {
                   type="date"
                   name="dateDebut"
                   className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  value={datedebut}
-                  onChange={(event) => setdatedebut(event.target.value)}
+                  value={dateDebut}
+                  onChange={(event) => setdateDebut(event.target.value)}
                 />
               </div>
             </div>
@@ -79,8 +79,8 @@ function ManiForm() {
                   type="date"
                   name="dateFin"
                   className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  value={datefin}
-                  onChange={(event) => setdatefin(event.target.value)}
+                  value={dateFin}
+                  onChange={(event) => setdateFin(event.target.value)}
                 />
               </div>
             </div>
