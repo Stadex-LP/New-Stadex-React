@@ -33,6 +33,7 @@ function MateTable() {
                   <th class="py-3 px-6 text-left">Id</th>
                   <th class="py-3 px-6 text-left">Libelle</th>
                   <th class="py-3 px-6 text-left">Prix Unitaire</th>
+                  <th class="py-3 px-6 text-left">Par Jour</th>
                   <th class="py-3 px-6 text-left">Actions</th>
                 </tr>
               </thead>
@@ -51,6 +52,10 @@ function MateTable() {
 
                     <td className="px-6 py-4 whitespace-nowrap text-left text-sm text-gray-500">
                       {item.prixUnitaire}
+                    </td>
+
+                    <td className="px-6 py-4 whitespace-nowrap text-left text-sm text-gray-500">
+                      {item.estParJour ? "true" : ""}
                     </td>
 
                     <td class="py-3 px-6">
