@@ -5,7 +5,7 @@ import "./index.css";
 import { Link } from "react-router-dom";
 
 const postData = async (data) => {
-  const response = await client.post("/equipement_sportifs", data);
+  const response = await client.post("/equipements", data);
   return response.data;
 };
 
