@@ -1,5 +1,5 @@
-import axios from "axios";
-import React, { useState } from "react";
+//import axios from "axios";
+import React, { useEffect, useState } from "react";
 import client from "../../../api"; //connexion avec axios que l'on a nomée client
 import { Link } from "react-router-dom";
 
@@ -16,6 +16,22 @@ function ManiForm() {
   const [dateDebut, setdateDebut] = useState("");
   const [lieu, setlieu] = useState("");
   const [organisateur, setorganisateur] = useState("");
+  const [organisateurList, setorganisateurList] = useState([]);
+
+  useEffect(() => {
+    client
+      .get("/organisateurs")
+      .then((response) => {
+        setorganisateurList(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
+  const handleSelectChange = (e) => {
+    setorganisateur(`api/organisateurs/${e.target.value}`);
+  };
 
   const handleSubmit = async (event) => {
     //soumettre le formulaire, il prend en option la fonction d'envoie
@@ -23,10 +39,12 @@ function ManiForm() {
 
     const data = { denomination, dateDebut, dateFin, lieu, organisateur };
 
-    const response = await postData(data);
-    console.log(response);
-  };
+    console.log("data: ", data);
 
+    const response = await postData(data);
+    console.log("res: ", response);
+    window.location.href = "/manifestations/";
+  };
   return (
     <form onSubmit={handleSubmit}>
       <div className="space-y-12">
@@ -112,7 +130,7 @@ function ManiForm() {
             >
               L'organisateur
             </label>
-            <div className="mt-2">
+            {/* <div className="mt-2">
               <input
                 type="text"
                 name="organisateur"
@@ -120,6 +138,20 @@ function ManiForm() {
                 value={organisateur}
                 onChange={(event) => setorganisateur(event.target.value)}
               />
+            </div> */}
+            <div className="mt-2">
+              <select
+                name="organisateur"
+                id="organisateur"
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                onChange={handleSelectChange}
+              >
+                {organisateurList.map((organisateur) => (
+                  <option key={organisateur.id} value={organisateur.id}>
+                    {organisateur.nom}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
         </div>
@@ -133,6 +165,7 @@ function ManiForm() {
             </Link> */}
         <Link to="/manifestations/">
           <button
+            onClick={handleSubmit}
             type="submit"
             className="rounded-md bg-green-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >

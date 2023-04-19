@@ -4,6 +4,8 @@ import "./App.css";
 import DashboardLayout from "./layouts/dashboard";
 import Home from "./views/home";
 import Manifestations from "./views/manifestations";
+import DetailsManifestation from "./views/manifestations/components/DetailsManifestation";
+import EditManifestation from "./views/manifestations/components/EditManifestation";
 import Transports from "./views/transports";
 import Equipements from "./views/equipements";
 import Organisateurs from "./views/organisateurs";
@@ -21,6 +23,11 @@ function App() {
         <Route path="/" element={<DashboardLayout />} />
         <Route path="/home" element={<Home />} />
         <Route path="/manifestations" element={<Manifestations />} />
+        <Route path="/manifestations/:id" element={<DetailsManifestation />} />
+        <Route
+          path="/manifestations/edit/:id"
+          element={<EditManifestation />}
+        />
         <Route path="/transports" element={<Transports />} />
         <Route path="/equipements" element={<Equipements />} />
         <Route path="/organisateurs" element={<Organisateurs />} />
