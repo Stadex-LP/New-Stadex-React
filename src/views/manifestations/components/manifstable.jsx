@@ -121,7 +121,7 @@ function ManifTable() {
                               </svg>
                             </Link>
                           </div>
-                          <button
+                          {/* <button
                             type="button"
                             onClick={() => setShowModal(true)}
                           >
@@ -140,7 +140,7 @@ function ManifTable() {
                                 />
                               </svg>
                             </div>
-                          </button>
+                          </button> */}
                         </div>
                       </td>
                     </tr>

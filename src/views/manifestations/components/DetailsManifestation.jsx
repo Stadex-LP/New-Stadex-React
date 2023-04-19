@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import client from "../../../api";
 import DashboardLayout from "../../../layouts/dashboard";
+import "./index.css";
 
 function DetailsManifestation() {
   // ici on utilise react router dom pour récupérer le parametre dans l'URL qui correspond à l'id de la manif séléctionnée
@@ -42,19 +43,36 @@ function DetailsManifestation() {
 
   return (
     <main>
-      <DashboardLayout />
-      <section className="flex h-fit w-full items-center flex-col pt-4 pb-[20px]">
-        <h2>{manifestation.denomination}</h2>
-        <p>ID : {manifestation.id}</p>
-        <p>Lieu : {manifestation.lieu}</p>
-        <p>Prix Total HT: {manifestation.prixTotalHT}</p>
-        <p>Date de début : {manifestation.dateDebut}</p>
-        <p>Date de fin : {manifestation.dateFin}</p>
-        <p>Prix Total TTC: {manifestation.prixTotalTTC}</p>
-      </section>
+      <DashboardLayout>
+        {/* <div class="h-screen px-4 pb-24 overflow-auto md:px-6">
+          <div className="flex h-fit w-full items-center justify-between pt-4 pb-[20px]">
+            <div>
+              <h1 class="text-4xl font-semibold text-gray-800">
+              Manifestations / Afficher
+              </h1>
+              <h2 class="text-gray-400 text-md">
+                Voici les détails des manifestations.
+              </h2>
+            </div>
+          </div>
+        </div> */}
 
-      <button onClick={handleEdit}>Modifier</button>
-      <button onClick={handleDelete}>Supprimer</button>
+        <div class="detail">
+          <section className="items-center">
+            <p>BONJOUR</p>
+            <h2>{manifestation.denomination}</h2>
+            <p>ID : {manifestation.id}</p>
+            <p>Lieu : {manifestation.lieu}</p>
+            <p>Prix Total HT: {manifestation.prixTotalHT}</p>
+            <p>Date de début : {manifestation.dateDebut}</p>
+            <p>Date de fin : {manifestation.dateFin}</p>
+            <p>Prix Total TTC: {manifestation.prixTotalTTC}</p>
+          </section>
+
+          <button onClick={handleEdit}>Modifier</button>
+          <button onClick={handleDelete}>Supprimer</button>
+        </div>
+      </DashboardLayout>
     </main>
   );
 }
