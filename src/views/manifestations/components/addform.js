@@ -1,5 +1,9 @@
-import axios from "axios";
 import React from "react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import client from "../../../api";
+
+
 
 const postData = async (data) => {
   // envoyer les données vers le lien localhost/api/mani
@@ -133,7 +137,7 @@ function ManiForm() {
             >
             Save
           </button>
-        </Link>
+        <Link/>
       </div>
     </form>
   );

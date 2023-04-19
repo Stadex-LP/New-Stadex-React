@@ -18,9 +18,10 @@ function EquiForm() {
     event.preventDefault();
 
     const data = { Libelle, PrixHorraire, CodePlanetic };
+    console.log("manifestation:" , data);
 
     const response = await postData(data);
-    console.log(response);
+    console.log("response", response);
 
   };
 
