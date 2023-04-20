@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import client from "../../../api";
+import { Link } from "react-router-dom";
 
 const postData = async (data) => {
   const response = await client.post("/organisateurs", data);
@@ -8,16 +9,19 @@ const postData = async (data) => {
 };
 
 function OrgaForm() {
-  const [NomOrga, setnom] = useState("");
-  const [ServiceDemandeur, setdemandeur] = useState("");
+  const [nom, setnom] = useState("");
+  const [serviceDemandeur, setserviceDemandeur] = useState("");
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    const data = { NomOrga, ServiceDemandeur };
+    const data = { nom, serviceDemandeur };
 
+    console.log("data: ", data);
     const response = await postData(data);
-    console.log(response);
+
+    console.log("res: ", response);
+    window.location.href = "/organisateurs/";
   };
 
   return (
@@ -26,7 +30,7 @@ function OrgaForm() {
         <div className="border-b border-gray-900/10 pb-12">
           <div className="col-span-full">
             <label
-              htmlFor="NomOrga"
+              htmlFor="nom"
               className="block text-sm font-medium leading-6 text-gray-900"
             >
               Nom Organisateurs
@@ -34,17 +38,17 @@ function OrgaForm() {
             <div className="mt-2">
               <input
                 type="text"
-                name="NomOrga"
+                name="nom"
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                value={NomOrga}
-                onChange={(event) => setnom(event.target.value)}
+                value={nom}
+                onChange={(e) => setnom(e.target.value)}
               />
             </div>
           </div>
 
           <div className="mt-5 col-span-full">
             <label
-              htmlFor="ServiceDemandeur"
+              htmlFor="serviceDemandeur"
               className="block text-sm font-medium leading-6 text-gray-900"
             >
               Service Demandeur
@@ -52,10 +56,10 @@ function OrgaForm() {
             <div className="mt-2">
               <input
                 type="text"
-                name="ServiceDemandeur"
+                name="serviceDemandeur"
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                value={ServiceDemandeur}
-                onChange={(event) => setdemandeur(event.target.value)}
+                value={serviceDemandeur}
+                onChange={(e) => setserviceDemandeur(e.target.value)}
               />
             </div>
           </div>
@@ -63,18 +67,15 @@ function OrgaForm() {
       </div>
 
       <div className="mt-6 flex items-center justify-end gap-x-6">
-        <button
-          type="button"
-          className="text-sm font-semibold leading-6 text-gray-900"
-        >
-          Cancel
-        </button>
-        <button
-          type="submit"
-          className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-        >
-          Save
-        </button>
+        <Link to="/organisateurs/">
+          <button
+            onClick={handleSubmit}
+            type="submit"
+            className="rounded-md bg-green-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            Save
+          </button>
+        </Link>
       </div>
     </form>
   );

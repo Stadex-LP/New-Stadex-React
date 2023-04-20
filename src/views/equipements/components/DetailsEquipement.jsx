@@ -4,18 +4,18 @@ import { useNavigate } from "react-router-dom";
 import client from "../../../api";
 import DashboardLayout from "../../../layouts/dashboard";
 
-function DetailsManifestation() {
+function DetailsEquipement() {
   // ici on utilise react router dom pour récupérer le parametre dans l'URL qui correspond à l'id de la manif séléctionnée
   const { id } = useParams();
-  const [manifestation, setManifestation] = useState(null);
+  const [equipement, setEquipement] = useState(null);
   const navigate = useNavigate();
 
   // ici on fait la requete fetch vers l'api
   useEffect(() => {
     client
-      .get(`/manifestations/${id}`)
+      .get(`/equipement_sportifs/${id}`)
       .then((response) => {
-        setManifestation(response.data);
+        setEquipement(response.data);
       })
       .catch((error) => {
         console.error(error);
@@ -23,32 +23,44 @@ function DetailsManifestation() {
   }, [id]);
 
   // on créer une exeption au cas ou la donnée n'est pas encore chargée
-  if (!manifestation) {
+  if (!equipement) {
     return <div>Chargement des données ...</div>;
   }
 
   const handleEdit = () => {
-    navigate(`/manifestations/edit/${manifestation.id}`);
+    navigate(`/equipements/edit/${equipement.id}`);
   };
 
   const handleDelete = () => {
     client
-      .delete(`manifestations/${id}`)
+      .delete(`equipements/${id}`)
       .then(() => {})
       .catch((error) => console.log(error));
 
-    navigate("/manifestations/");
+    navigate("/equipements/");
   };
 
   return (
     <main>
       <DashboardLayout>
+        {/* <div class="h-screen px-4 pb-24 overflow-auto md:px-6">
+          <div className="flex h-fit w-full items-center justify-between pt-4 pb-[20px]">
+            <div>
+              <h1 class="text-4xl font-semibold text-gray-800">
+              Mquipements / Afficher
+              </h1>
+              <h2 class="text-gray-400 text-md">
+                Voici les détails des mquipements.
+              </h2>
+            </div>
+          </div>
+        </div> */}
         <div class="h-screen px-4 pb-24 overflow-auto md:px-6">
           <div className="flex h-fit w-full items-center justify-between pt-4 pb-[20px]">
             <div className="w-full">
               <div className="px-4 sm:px-0">
                 <h3 className="text-base font-semibold leading-7 text-gray-900">
-                  Manifestation Information
+                  Equipement Information
                 </h3>
                 <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
                   Voici les details.
@@ -61,57 +73,26 @@ function DetailsManifestation() {
                       ID
                     </dt>
                     <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                      <h2>{manifestation.id}</h2>
+                      <h2>{equipement.id}</h2>
                     </dd>
                   </div>
                   <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                     <dt className="text-sm font-medium leading-6 text-gray-900">
-                      Nom
+                      Libelle
                     </dt>
                     <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                      <h2>{manifestation.denomination}</h2>
+                      <h2>{equipement.libelle}</h2>
                     </dd>
                   </div>
                   <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                     <dt className="text-sm font-medium leading-6 text-gray-900">
-                      Lieu
+                      Code
                     </dt>
                     <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                      {manifestation.lieu}
+                      {equipement.codePlanitec}
                     </dd>
                   </div>
-                  <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                    <dt className="text-sm font-medium leading-6 text-gray-900">
-                      Date de début
-                    </dt>
-                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                      {manifestation.dateDebut}
-                    </dd>
-                  </div>
-                  <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                    <dt className="text-sm font-medium leading-6 text-gray-900">
-                      Date de Fin
-                    </dt>
-                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                      {manifestation.dateFin}
-                    </dd>
-                  </div>
-                  <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                    <dt className="text-sm font-medium leading-6 text-gray-900">
-                      Prix total HT
-                    </dt>
-                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                      {manifestation.prixTotalHT}
-                    </dd>
-                  </div>
-                  <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                    <dt className="text-sm font-medium leading-6 text-gray-900">
-                      Prix total TTC
-                    </dt>
-                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                      {manifestation.prixTotalTTC}
-                    </dd>
-                  </div>
+
                   <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                     <dt className="text-sm font-medium leading-6 text-gray-900">
                       Actions
@@ -128,9 +109,22 @@ function DetailsManifestation() {
             </div>
           </div>
         </div>
+        {/* <div class="detail">
+          <section className="items-center">
+            <p>BONJOUR</p>
+            <h2>{equipement.denomination}</h2>
+            <p>ID : {equipement.id}</p>
+            <p>Libelle : {equipement.libelle}</p>
+            <p>Prix Horaire: {equipement.prixHoraire}</p>
+            <p>Code : {equipement.codePlanitec}</p>
+          </section>
+
+          <button onClick={handleEdit}>Modifier</button>
+          <button onClick={handleDelete}>Supprimer</button>
+        </div> */}
       </DashboardLayout>
     </main>
   );
 }
 
-export default DetailsManifestation;
+export default DetailsEquipement;

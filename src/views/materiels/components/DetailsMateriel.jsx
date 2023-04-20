@@ -4,18 +4,18 @@ import { useNavigate } from "react-router-dom";
 import client from "../../../api";
 import DashboardLayout from "../../../layouts/dashboard";
 
-function DetailsManifestation() {
+function DetailsMateriel() {
   // ici on utilise react router dom pour récupérer le parametre dans l'URL qui correspond à l'id de la manif séléctionnée
   const { id } = useParams();
-  const [manifestation, setManifestation] = useState(null);
+  const [materiel, setMateriel] = useState(null);
   const navigate = useNavigate();
 
   // ici on fait la requete fetch vers l'api
   useEffect(() => {
     client
-      .get(`/manifestations/${id}`)
+      .get(`/materiels/${id}`)
       .then((response) => {
-        setManifestation(response.data);
+        setMateriel(response.data);
       })
       .catch((error) => {
         console.error(error);
@@ -23,21 +23,21 @@ function DetailsManifestation() {
   }, [id]);
 
   // on créer une exeption au cas ou la donnée n'est pas encore chargée
-  if (!manifestation) {
+  if (!materiel) {
     return <div>Chargement des données ...</div>;
   }
 
   const handleEdit = () => {
-    navigate(`/manifestations/edit/${manifestation.id}`);
+    navigate(`/materiels/edit/${materiel.id}`);
   };
 
   const handleDelete = () => {
     client
-      .delete(`manifestations/${id}`)
+      .delete(`materiels/${id}`)
       .then(() => {})
       .catch((error) => console.log(error));
 
-    navigate("/manifestations/");
+    navigate("/materiels/");
   };
 
   return (
@@ -48,7 +48,7 @@ function DetailsManifestation() {
             <div className="w-full">
               <div className="px-4 sm:px-0">
                 <h3 className="text-base font-semibold leading-7 text-gray-900">
-                  Manifestation Information
+                  Materiel Information
                 </h3>
                 <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
                   Voici les details.
@@ -61,57 +61,36 @@ function DetailsManifestation() {
                       ID
                     </dt>
                     <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                      <h2>{manifestation.id}</h2>
+                      <h2>{materiel.id}</h2>
                     </dd>
                   </div>
                   <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                     <dt className="text-sm font-medium leading-6 text-gray-900">
-                      Nom
+                      Libelle
                     </dt>
                     <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                      <h2>{manifestation.denomination}</h2>
+                      <h2>{materiel.libelle}</h2>
                     </dd>
                   </div>
+
                   <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                     <dt className="text-sm font-medium leading-6 text-gray-900">
-                      Lieu
+                      Prix Unitaire
                     </dt>
                     <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                      {manifestation.lieu}
+                      {materiel.prixUnitaire}
                     </dd>
                   </div>
+
                   <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                     <dt className="text-sm font-medium leading-6 text-gray-900">
-                      Date de début
+                      Par jour
                     </dt>
                     <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                      {manifestation.dateDebut}
+                      {materiel.estParJour}
                     </dd>
                   </div>
-                  <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                    <dt className="text-sm font-medium leading-6 text-gray-900">
-                      Date de Fin
-                    </dt>
-                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                      {manifestation.dateFin}
-                    </dd>
-                  </div>
-                  <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                    <dt className="text-sm font-medium leading-6 text-gray-900">
-                      Prix total HT
-                    </dt>
-                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                      {manifestation.prixTotalHT}
-                    </dd>
-                  </div>
-                  <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                    <dt className="text-sm font-medium leading-6 text-gray-900">
-                      Prix total TTC
-                    </dt>
-                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                      {manifestation.prixTotalTTC}
-                    </dd>
-                  </div>
+
                   <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                     <dt className="text-sm font-medium leading-6 text-gray-900">
                       Actions
@@ -128,9 +107,23 @@ function DetailsManifestation() {
             </div>
           </div>
         </div>
+
+        <div class="detail">
+          <section className="items-center">
+            <p>BONJOUR</p>
+            <h2>{materiel.denomination}</h2>
+            <p>ID : {materiel.id}</p>
+            <p>Libelle : {materiel.libelle}</p>
+            <p>Prix Unitaire: {materiel.prixUnitaire}</p>
+            <p>Par jour : {materiel.estParJour}</p>
+          </section>
+
+          <button onClick={handleEdit}>Modifier</button>
+          <button onClick={handleDelete}>Supprimer</button>
+        </div>
       </DashboardLayout>
     </main>
   );
 }
 
-export default DetailsManifestation;
+export default DetailsMateriel;
