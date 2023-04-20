@@ -1,0 +1,9 @@
+/* RSUITE */
+@import "~rsuite/dist/rsuite.min.css";
+
+/* exemple de responsive, ici sur le format mobile (S, M, L) */
+/* @media screen and (max-width: 767px) {
+  body {
+    background-color: red;
+  }
+} */

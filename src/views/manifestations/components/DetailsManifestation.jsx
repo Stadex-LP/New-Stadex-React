@@ -3,12 +3,36 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import client from "../../../api";
 import DashboardLayout from "../../../layouts/dashboard";
+// import tab rsuite
+import { Header, Nav, Table } from "rsuite";
+
+const Tab = ({ active, onSelect, ...props }) => {
+  return (
+    <Nav
+      {...props}
+      activeKey={active}
+      onSelect={onSelect}
+      style={{ marginBottom: 50 }}
+    >
+      <Nav.Item eventKey="materiels">Matériels</Nav.Item>
+      <Nav.Item eventKey="equipement_sportifs">Équipements Sportifs</Nav.Item>
+      <Nav.Item eventKey="transports">Transports</Nav.Item>
+    </Nav>
+  );
+};
+
+const { Column, HeaderCell, Cell } = Table;
 
 function DetailsManifestation() {
   // ici on utilise react router dom pour récupérer le parametre dans l'URL qui correspond à l'id de la manif séléctionnée
   const { id } = useParams();
   const [manifestation, setManifestation] = useState(null);
   const navigate = useNavigate();
+  const [active, setActive] = useState("Matériels");
+  const [manifestationMaterielsData, setManifestationMaterielsData] = useState(
+    []
+  );
+  const [montantHT, setMontantHT] = useState(0);
 
   // ici on fait la requete fetch vers l'api
   useEffect(() => {
@@ -16,6 +40,13 @@ function DetailsManifestation() {
       .get(`/manifestations/${id}`)
       .then((response) => {
         setManifestation(response.data);
+        setManifestationMaterielsData(response.data.manifestationMateriels);
+        const prixUnitaireFact = parseFloat(
+          response.data.manifestationMateriels.prixUnitaireFact
+        );
+        setMontantHT(
+          Math.round(prixUnitaireFact ? Math.round(prixUnitaireFact / 1.2) : 0)
+        );
       })
       .catch((error) => {
         console.error(error);
@@ -124,6 +155,116 @@ function DetailsManifestation() {
                     </dd>
                   </div>
                 </dl>
+                <Tab active={active} onSelect={setActive} appearance="tabs" />
+                {active === "materiels" && (
+                  <>
+                    <Table
+                      virtualized
+                      height={400}
+                      data={manifestationMaterielsData}
+                    >
+                      <Column width={150} align="center" fixed>
+                        <HeaderCell>Libellé</HeaderCell>
+                        <Cell dataKey="materiel.libelle"></Cell>
+                      </Column>
+
+                      <Column width={150} align="center" fixed>
+                        <HeaderCell>Quantité</HeaderCell>
+                        <Cell dataKey="qte"></Cell>
+                      </Column>
+
+                      <Column width={150} align="center" fixed>
+                        <HeaderCell>Jour</HeaderCell>
+                        <Cell dataKey="jour"></Cell>
+                      </Column>
+
+                      <Column width={150} align="center" fixed>
+                        <HeaderCell>Prix Unitaire HT</HeaderCell>
+                        <Cell dataKey="prixUnitaireFact"></Cell>
+                      </Column>
+
+                      <Column width={150} align="center" fixed>
+                        <HeaderCell>Prix Total HT</HeaderCell>
+                        <Cell dataKey="prixUnitaireFact"></Cell>
+                      </Column>
+
+                      <Column width={150} align="center" fixed>
+                        <HeaderCell>Prix Total TTC</HeaderCell>
+                        <Cell dataKey="prixUnitaireFact"></Cell>
+                      </Column>
+                    </Table>
+                  </>
+                )}
+                {active === "equipement_sportifs" && (
+                  <>
+                    <Table virtualized height={400}>
+                      <Column width={150} align="center" fixed>
+                        <HeaderCell>Libellé</HeaderCell>
+                        <Cell dataKey="libelle"></Cell>
+                      </Column>
+
+                      <Column width={150} align="center" fixed>
+                        <HeaderCell>Quantité</HeaderCell>
+                        <Cell dataKey="quantite"></Cell>
+                      </Column>
+
+                      <Column width={150} align="center" fixed>
+                        <HeaderCell>Jour</HeaderCell>
+                        <Cell dataKey="jour"></Cell>
+                      </Column>
+
+                      <Column width={150} align="center" fixed>
+                        <HeaderCell>Prix Unitaire HT</HeaderCell>
+                        <Cell dataKey="prixHT"></Cell>
+                      </Column>
+
+                      <Column width={150} align="center" fixed>
+                        <HeaderCell>Prix Total HT</HeaderCell>
+                        <Cell dataKey="totalHT"></Cell>
+                      </Column>
+
+                      <Column width={150} align="center" fixed>
+                        <HeaderCell>Prix Total TTC</HeaderCell>
+                        <Cell dataKey="totalTTC"></Cell>
+                      </Column>
+                    </Table>
+                  </>
+                )}
+                {active === "transports" && (
+                  <>
+                    <Table virtualized height={400}>
+                      <Column width={150} align="center" fixed>
+                        <HeaderCell>Libellé</HeaderCell>
+                        <Cell dataKey="libelle"></Cell>
+                      </Column>
+
+                      <Column width={150} align="center" fixed>
+                        <HeaderCell>Quantité</HeaderCell>
+                        <Cell dataKey="quantite"></Cell>
+                      </Column>
+
+                      <Column width={150} align="center" fixed>
+                        <HeaderCell>Jour</HeaderCell>
+                        <Cell dataKey="jour"></Cell>
+                      </Column>
+
+                      <Column width={150} align="center" fixed>
+                        <HeaderCell>Prix Unitaire HT</HeaderCell>
+                        <Cell dataKey="prixHT"></Cell>
+                      </Column>
+
+                      <Column width={150} align="center" fixed>
+                        <HeaderCell>Prix Total HT</HeaderCell>
+                        <Cell dataKey="totalHT"></Cell>
+                      </Column>
+
+                      <Column width={150} align="center" fixed>
+                        <HeaderCell>Prix Total TTC</HeaderCell>
+                        <Cell dataKey="totalTTC"></Cell>
+                      </Column>
+                    </Table>
+                  </>
+                )}
               </div>
             </div>
           </div>

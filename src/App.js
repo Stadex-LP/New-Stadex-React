@@ -16,11 +16,13 @@ import Transports from "./views/transports";
 import Equipements from "./views/equipements";
 import Organisateurs from "./views/organisateurs";
 import Materiels from "./views/materiels";
+import MainOeuvre from "./views/maindoeuvres";
 import AddManifs from "./views/manifestations/add";
 import AddTrans from "./views/transports/add";
 import AddEqui from "./views/equipements/add";
 import AddOrga from "./views/organisateurs/add";
 import AddMate from "./views/materiels/add";
+import AddMaino from "./views/maindoeuvres/add";
 
 function App() {
   return (
@@ -49,12 +51,14 @@ function App() {
         <Route path="/equipements" element={<Equipements />} />
         <Route path="/organisateurs" element={<Organisateurs />} />
         <Route path="/materiels" element={<Materiels />} />
+        <Route path="/main_oeuvre" element={<MainOeuvre />} />
 
         <Route path="/manifestations/add" element={<AddManifs />} />
         <Route path="/transports/add" element={<AddTrans />} />
         <Route path="/equipements/add" element={<AddEqui />} />
         <Route path="/organisateurs/add" element={<AddOrga />} />
         <Route path="/materiels/add" element={<AddMate />} />
+        <Route path="/main_oeuvre/add" element={<AddMaino />} />
       </Routes>
     </Router>
   );
