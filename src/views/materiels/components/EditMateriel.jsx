@@ -8,6 +8,9 @@ import { Link } from "react-router-dom";
 function EditMateriel() {
   const { id } = useParams();
   const [materiel, setMateriel] = useState({});
+  const [libelle, setlibelle] = useState("");
+  const [prixUnitaire, setprixUnitaire] = useState(0);
+  const [estParJour, setestParJour] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,42 +23,32 @@ function EditMateriel() {
       .catch((error) => console.log(error));
   }, [id]);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setMateriel((prevState) => {
-      return {
-        ...prevState,
-        [name]: value,
-      };
-    });
-    console.log("mate changed:", materiel);
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    client
-      .patch(
-        `/materiels/${id}`,
-        {
-          libelle: materiel.libelle,
-          prixUnitaire: materiel.prixUnitaire,
-          estParJour: materiel.estParJour,
-        },
-        {
-          headers: {
-            "Content-Type": "application/merge-patch+json",
-          },
-        }
-      )
-      .then((response) => console.log("response:", response))
-      .catch((error) => console.log(error));
-
+    const data = { libelle, prixUnitaire, estParJour };
+    const response = await patchData(data);
+    console.log("res: ", response);
     navigate("/materiels/");
   };
 
   if (!materiel) {
     return <div>Chargement des données ..</div>;
   }
+
+  const handleChangePrice = (e) => {
+    e.preventDefault();
+    const priceValue = parseFloat(e.target.value);
+    setprixUnitaire(priceValue);
+  };
+
+  const patchData = async (data) => {
+    const response = await client.patch(`/materiels/${id}`, data, {
+      headers: {
+        "Content-Type": "application/merge-patch+json",
+      },
+    });
+    return response.data;
+  };
 
   return (
     <main>
@@ -83,19 +76,19 @@ function EditMateriel() {
                 type="text"
                 name="libelle"
                 className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                value={materiel.libelle}
-                onChange={handleInputChange}
+                value={libelle}
+                onChange={(e) => setlibelle(e.target.value)}
               />
             </label>
             <br />
             <label htmlFor="lieu">
               Prix Unitaire :
               <input
-                type="numero"
+                type="number"
                 name="prixUnitaire"
                 className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                value={materiel.prixUnitaire}
-                onChange={handleInputChange}
+                value={prixUnitaire}
+                onChange={handleChangePrice}
               />
             </label>
             <br />
@@ -105,8 +98,8 @@ function EditMateriel() {
               <input
                 type="checkbox"
                 name="estParJour"
-                value={materiel.estParJour}
-                onChange={handleInputChange}
+                value={estParJour}
+                onChange={(e) => setestParJour(e.target.value)}
               />
             </label>
             <br />

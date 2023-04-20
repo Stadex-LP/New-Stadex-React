@@ -8,53 +8,40 @@ import { Link } from "react-router-dom";
 function EditOrganisateur() {
   const { id } = useParams();
   const [organisateur, setOrganisateur] = useState({});
+  const [nom, setnom] = useState("");
+  const [serviceDemandeur, setserviceDemandeur] = useState("");
   const navigate = useNavigate();
 
+  // fetch orga datas
   useEffect(() => {
     client
       .get(`/organisateurs/${id}`)
       .then((response) => {
-        console.log("res:", response.data);
         setOrganisateur(response.data);
       })
       .catch((error) => console.log(error));
   }, [id]);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setOrganisateur((prevState) => {
-      return {
-        ...prevState,
-        [name]: value,
-      };
-    });
-    console.log("orga changed:", organisateur);
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    client
-      .patch(
-        `/organisateurs/${id}`,
-        {
-          nom: organisateur.nom,
-          serviceDemandeur: organisateur.serviceDemandeur,
-        },
-        {
-          headers: {
-            "Content-Type": "application/merge-patch+json",
-          },
-        }
-      )
-      .then((response) => console.log("response:", response))
-      .catch((error) => console.log(error));
-
+    const data = { nom, serviceDemandeur };
+    const response = await patchData(data);
+    console.log("res: ", response);
     navigate("/organisateurs/");
   };
 
   if (!organisateur) {
     return <div>Chargement des données ..</div>;
   }
+
+  const patchData = async (data) => {
+    const response = await client.patch(`/organisateurs/${id}`, data, {
+      headers: {
+        "Content-Type": "application/merge-patch+json",
+      },
+    });
+    return response.data;
+  };
 
   return (
     <main>
@@ -83,8 +70,8 @@ function EditOrganisateur() {
                 type="text"
                 name="denomination"
                 className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                value={organisateur.nom}
-                onChange={handleInputChange}
+                value={nom}
+                onChange={(e) => setnom(e.target.value)}
               />
             </label>
             <br />
@@ -94,8 +81,8 @@ function EditOrganisateur() {
                 type="text"
                 name="serviceDemandeur"
                 className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                value={organisateur.serviceDemandeur}
-                onChange={handleInputChange}
+                value={serviceDemandeur}
+                onChange={(e) => setserviceDemandeur(e.target.value)}
               />
             </label>
             <br />

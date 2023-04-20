@@ -9,6 +9,8 @@ function EditTransport() {
   const { id } = useParams();
   const [transport, setTransport] = useState({});
   const navigate = useNavigate();
+  const [libelle, setlibelle] = useState("");
+  const [prixHoraire, setprixHoraire] = useState("");
 
   useEffect(() => {
     client
@@ -20,41 +22,32 @@ function EditTransport() {
       .catch((error) => console.log(error));
   }, [id]);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setTransport((prevState) => {
-      return {
-        ...prevState,
-        [name]: value,
-      };
-    });
-    console.log("trans changed:", transport);
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    client
-      .patch(
-        `/transports/${id}`,
-        {
-          libelle: transport.libelle,
-          prixHoraire: transport.prixHoraire,
-        },
-        {
-          headers: {
-            "Content-Type": "application/merge-patch+json",
-          },
-        }
-      )
-      .then((response) => console.log("response:", response))
-      .catch((error) => console.log(error));
-
+    const data = { libelle, prixHoraire };
+    const response = await patchData(data);
+    console.log("res: ", response);
     navigate("/transports/");
   };
 
   if (!transport) {
     return <div>Chargement des données ..</div>;
   }
+
+  const handleChangePrice = (e) => {
+    e.preventDefault();
+    const priceValue = parseFloat(e.target.value);
+    setprixHoraire(priceValue);
+  };
+
+  const patchData = async (data) => {
+    const response = await client.patch(`/transports/${id}`, data, {
+      headers: {
+        "Content-Type": "application/merge-patch+json",
+      },
+    });
+    return response.data;
+  };
 
   return (
     <DashboardLayout>
@@ -82,19 +75,19 @@ function EditTransport() {
               type="text"
               name="libelle"
               className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              value={transport.libelle}
-              onChange={handleInputChange}
+              value={libelle}
+              onChange={(e) => setlibelle(e.target.value)}
             />
           </label>
           <br />
           <label htmlFor="prixHoraire">
             Prix Horaire :
             <input
-              type="numero"
+              type="number"
               name="prixHoraire"
               className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              value={transport.prixHoraire}
-              onChange={handleInputChange}
+              value={prixHoraire}
+              onChange={handleChangePrice}
             />
           </label>
           <br />

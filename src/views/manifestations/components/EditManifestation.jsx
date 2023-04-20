@@ -7,57 +7,47 @@ import { Link } from "react-router-dom";
 
 function EditManifestation() {
   const { id } = useParams();
-  const [manifestation, setManifestation] = useState({});
+  const [denomination, setdenomination] = useState("");
+  const [dateFin, setdateFin] = useState("");
+  const [dateDebut, setdateDebut] = useState("");
+  const [lieu, setlieu] = useState("");
   const navigate = useNavigate();
+  const [organisateur, setorganisateur] = useState("");
+  const [organisateurList, setorganisateurList] = useState([]);
 
+  // fetch orga datas
   useEffect(() => {
     client
-      .get(`/manifestations/${id}`)
+      .get("/organisateurs")
       .then((response) => {
-        console.log("res:", response.data);
-        setManifestation(response.data);
+        setorganisateurList(response.data);
       })
-      .catch((error) => console.log(error));
-  }, [id]);
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setManifestation((prevState) => {
-      return {
-        ...prevState,
-        [name]: value,
-      };
-    });
-    console.log("manif changed:", manifestation);
+  const handleSelectChange = (e) => {
+    setorganisateur(`api/organisateurs/${e.target.value}`);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    client
-      .patch(
-        `/manifestations/${id}`,
-        {
-          denomination: manifestation.denomination,
-          dateDebut: manifestation.dateDebut,
-          dateFin: manifestation.dateFin,
-          lieu: manifestation.lieu,
-          organisateur: manifestation.organisateur.nom,
-        },
-        {
-          headers: {
-            "Content-Type": "application/merge-patch+json",
-          },
-        }
-      )
-      .then((response) => console.log("response:", response))
-      .catch((error) => console.log(error));
+  // on update le formulaire avec les nouvelles données
+  const patchData = async (data) => {
+    const response = await client.patch(`/manifestations/${id}`, data, {
+      headers: {
+        "Content-Type": "application/merge-patch+json",
+      },
+    });
+    return response.data;
+  };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = { denomination, dateDebut, dateFin, lieu, organisateur };
+    const response = await patchData(data);
+    console.log("res: ", response);
     navigate("/manifestations/");
   };
-
-  if (!manifestation) {
-    return <div>Chargement des données ..</div>;
-  }
 
   return (
     <DashboardLayout>
@@ -85,8 +75,8 @@ function EditManifestation() {
               type="text"
               name="denomination"
               className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              value={manifestation.denomination}
-              onChange={handleInputChange}
+              value={denomination}
+              onChange={(event) => setdenomination(event.target.value)}
             />
           </label>
           <br />
@@ -96,8 +86,8 @@ function EditManifestation() {
               type="date"
               name="date-debut"
               className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              value={manifestation.dateDebut}
-              onChange={handleInputChange}
+              value={dateDebut}
+              onChange={(event) => setdateDebut(event.target.value)}
             />
           </label>
           <br />
@@ -107,8 +97,8 @@ function EditManifestation() {
               type="date"
               name="date-fin"
               className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              value={manifestation.dateFin}
-              onChange={handleInputChange}
+              value={dateFin}
+              onChange={(event) => setdateFin(event.target.value)}
             />
           </label>
           <br />
@@ -118,33 +108,23 @@ function EditManifestation() {
               type="text"
               name="lieu"
               className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              value={manifestation.lieu}
-              onChange={handleInputChange}
+              value={lieu}
+              onChange={(event) => setlieu(event.target.value)}
             />
           </label>
           <br />
-          <label htmlFor="organisateur">
-            Organisateur :
-            <input
-              type="text"
-              name="organisateur"
-              className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              value={manifestation.organisateur?.nom}
-              onChange={handleInputChange}
-            />
-            {/* <select
-                name="organisateur"
-                id="organisateur"
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                onChange={handleSelectChange}
-              >
-                {organisateurList.map((organisateur) => (
-                  <option key={organisateur.id} value={organisateur.id}>
-                    {organisateur.nom}
-                  </option>
-                ))}
-              </select> */}
-          </label>
+          <select
+            name="organisateur"
+            id="organisateur"
+            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            onChange={handleSelectChange}
+          >
+            {organisateurList.map((organisateur) => (
+              <option key={organisateur.id} value={organisateur.id}>
+                {organisateur.nom}
+              </option>
+            ))}
+          </select>
           <br />
           <button
             type="submit"

@@ -1,7 +1,5 @@
-import logo from "./logo.svg";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
-import DashboardLayout from "./layouts/dashboard";
 import Home from "./views/home";
 import Manifestations from "./views/manifestations";
 import DetailsManifestation from "./views/manifestations/components/DetailsManifestation";
@@ -28,8 +26,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<DashboardLayout />} />
-        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="/manifestations" element={<Manifestations />} />
         <Route path="/manifestations/:id" element={<DetailsManifestation />} />
 

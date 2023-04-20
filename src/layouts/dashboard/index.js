@@ -14,7 +14,7 @@ function DashboardLayout(props) {
             </div>
             <nav class="mt-6">
               <div>
-                <NavLink to="/home" activeclassName="active">
+                <NavLink to="/" activeclassName="active">
                   <div class="flex items-center justify-start w-full p-2 pl-6 text-gray-800 transition-colors duration-200 border-l-4 border-green-400 dark:text-white">
                     <span class="text-left-home">
                       <svg

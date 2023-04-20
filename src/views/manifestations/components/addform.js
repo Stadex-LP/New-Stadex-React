@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import client from "../../../api"; //connexion avec axios que l'on a nomée client
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const postData = async (data) => {
   // envoyer les données vers le lien localhost/api/mani
@@ -17,6 +18,7 @@ function ManiForm() {
   const [lieu, setlieu] = useState("");
   const [organisateur, setorganisateur] = useState("");
   const [organisateurList, setorganisateurList] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     client
@@ -43,7 +45,7 @@ function ManiForm() {
 
     const response = await postData(data);
     console.log("res: ", response);
-    window.location.href = "/manifestations/";
+    // navigate("/manifestations/");
   };
   return (
     <form onSubmit={handleSubmit}>

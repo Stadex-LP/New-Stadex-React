@@ -33,7 +33,7 @@ function DetailsEquipement() {
 
   const handleDelete = () => {
     client
-      .delete(`equipements/${id}`)
+      .delete(`equipement_sportifs/${id}`)
       .then(() => {})
       .catch((error) => console.log(error));
 

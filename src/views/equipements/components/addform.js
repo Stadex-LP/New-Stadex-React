@@ -3,25 +3,32 @@ import React, { useState } from "react";
 import client from "../../../api";
 import "./index.css";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const postData = async (data) => {
-  const response = await client.post("/equipements", data);
+  const response = await client.post("/equipement_sportifs", data);
   return response.data;
 };
 
 function EquiForm() {
   const [libelle, setlibelle] = useState("");
-  const [prixHoraire, setprixHoraire] = useState("");
+  const [prixHoraire, setprixHoraire] = useState(0);
   const [codePlanitec, setcodePlanitec] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const data = { libelle, prixHoraire, codePlanitec };
-    console.log("data: ", data);
     const response = await postData(data);
     console.log("res: ", response);
-    window.location.href = "/equipements/";
+    navigate("/equipements/");
+  };
+
+  const handleChangePrice = (e) => {
+    e.preventDefault();
+    const priceValue = parseFloat(e.target.value);
+    setprixHoraire(priceValue);
   };
 
   return (
@@ -54,11 +61,11 @@ function EquiForm() {
             </label>
             <div className="mt-2">
               <input
-                type="numero"
+                type="number"
                 name="prixHoraire"
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 value={prixHoraire}
-                onChange={(e) => setprixHoraire(e.target.value)}
+                onChange={handleChangePrice}
               />
             </div>
           </div>
