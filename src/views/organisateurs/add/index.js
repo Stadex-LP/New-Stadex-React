@@ -8,7 +8,7 @@ function AddOrga() {
         <div className="flex h-fit w-full items-center justify-between pt-4 pb-[20px] shadow-2xl shadow-gray-100">
           <div>
             <h1 class="text-4xl font-semibold text-gray-800">
-              Ajouter un nouvelle organisateur
+              Ajouter un nouvelle association
             </h1>
             <h2 class="text-gray-400 text-md">
               Remplissez le formulaire ci-dessous.

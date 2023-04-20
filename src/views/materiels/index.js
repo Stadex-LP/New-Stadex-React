@@ -8,9 +8,9 @@ function Materiels() {
       <div class="h-screen px-4 pb-24 overflow-auto md:px-6">
         <div className="flex h-fit w-full items-center justify-between pt-4 pb-[20px]">
           <div>
-            <h1 class="text-4xl font-semibold">Les Matériaux</h1>
+            <h1 class="text-4xl font-semibold">Les Matériels</h1>
             <h2 class="text-gray-400 text-md">
-              Ici retrouvrez la liste de toutes les matériaux.
+              Ici retrouvrez la liste de tous les mattériels.
             </h2>
           </div>
           <Link to="/materiels/add">

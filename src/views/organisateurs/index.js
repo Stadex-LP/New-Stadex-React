@@ -9,10 +9,10 @@ function Organisateurs() {
         <div className="flex h-fit w-full items-center justify-between pt-4 pb-[20px]">
           <div>
             <h1 class="text-4xl font-semibold text-gray-800 dark:text-white">
-              Les Organisateurs
+              Les Associations
             </h1>
             <h2 class="text-gray-400 text-md">
-              Ici retrouvrez la liste de tous les organisateurs.
+              Ici retrouvrez la liste de tous les associations.
             </h2>
           </div>
           <Link to="/organisateurs/add">

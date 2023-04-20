@@ -40,12 +40,11 @@ function ManiForm() {
     event.preventDefault();
 
     const data = { denomination, dateDebut, dateFin, lieu, organisateur };
-
     console.log("data: ", data);
 
     const response = await postData(data);
     console.log("res: ", response);
-    // navigate("/manifestations/");
+    navigate("/manifestations/");
   };
   return (
     <form onSubmit={handleSubmit}>

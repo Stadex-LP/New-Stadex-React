@@ -202,15 +202,22 @@ function EditManifestation() {
         }))
       ),
     };
-    console.log("data Manif OBJ:", data.manifestationMateriels);
-    console.log("newItems:", newItems);
+    console.log("data:", data);
     try {
-      const response = await patchData(data);
-      console.log("PATCH: ", response);
-      setnewItems([]);
-      const response2 = await postMaterielsData(newItems);
-      console.log("POST:", response2);
-      // navigate("/manifestations/");
+      console.log("new items:", newItems);
+      if (newItems.length === 0) {
+        const response = await patchData(data);
+        console.log("PATCH: ", response);
+        setnewItems([]);
+        navigate("/manifestations/");
+      } else {
+        const response = await patchData(data);
+        console.log("PATCH: ", response);
+        setnewItems([]);
+        const response2 = await postMaterielsData(newItems);
+        console.log("POST:", response2);
+        navigate("/manifestations/");
+      }
     } catch (error) {
       console.error(error);
     }

@@ -18,7 +18,7 @@ function Equipements() {
               + Ajouter
             </button>
           </Link>
-          <Link to="http://localhost/equipement_sportifs?export=csv">
+          <Link to="http://localhost/equipement/sportif?export=csv">
             <button className="linear rounded-[20px] bg-lightPrimary px-4 py-2 text-base font-medium text-brand-500 transition duration-200 hover:bg-gray-100 active:bg-gray-200">
               CSV
             </button>
